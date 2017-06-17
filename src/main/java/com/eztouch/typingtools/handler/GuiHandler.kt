@@ -1,9 +1,9 @@
 package com.eztouch.typingtools.handler
 
+import com.eztouch.typingtools.client.gui.CustomGuiChat
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 import net.minecraftforge.fml.common.network.IGuiHandler
-import com.eztouch.typingtools.client.gui.CustomGuiChat
 
 class GuiHandler : IGuiHandler {
 

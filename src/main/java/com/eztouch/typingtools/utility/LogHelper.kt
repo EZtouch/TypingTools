@@ -1,7 +1,6 @@
 package com.eztouch.typingtools.utility
 
 import org.apache.logging.log4j.Level
-import com.eztouch.typingtools.reference.Reference
 
 object LogHelper {
     private fun log(logLevel: Level, `object`: Any) {
