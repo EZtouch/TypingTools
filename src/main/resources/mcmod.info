@@ -1,0 +1,15 @@
+[
+{
+  "modid": "Fonter",
+  "name": "Fonter",
+  "description": "Makes the font fancy",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["EZtouch"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
