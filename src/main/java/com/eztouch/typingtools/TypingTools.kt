@@ -1,9 +1,6 @@
 package com.eztouch.typingtools
 
-import com.eztouch.typingtools.common.CommonProxy
-import com.eztouch.typingtools.handler.GuiAnalyzer
-import com.eztouch.typingtools.handler.KeyInputEventHandler
-import com.eztouch.typingtools.handler.MessageAnalyzer
+import com.eztouch.typingtools.proxy.IProxy
 import com.eztouch.typingtools.reference.Messages
 import com.eztouch.typingtools.reference.Reference
 import com.eztouch.typingtools.util.LogHelper
@@ -11,9 +8,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.SidedProxy
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent
-import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.event.*
 
 
 @Mod(modid = Reference.MOD_ID,
@@ -22,37 +17,52 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
         version = Reference.VERSION)
 class TypingTools {
 
-    @Mod.Instance(Reference.MOD_ID)
-    var instance: TypingTools? = null
-
     @EventHandler
     fun preInit(event: FMLInitializationEvent) {
-        proxy!!.registerHandlers()
         MinecraftForge.EVENT_BUS.register(instance)
-
-        MinecraftForge.EVENT_BUS.register(MessageAnalyzer())
-        MinecraftForge.EVENT_BUS.register(GuiAnalyzer())
-        MinecraftForge.EVENT_BUS.register(KeyInputEventHandler())
     }
 
     @EventHandler
     fun invalidFingerprint(event: FMLFingerprintViolationEvent) {
-        if (FINGERPRINT.equals("@FINGERPRINT@")) {
+        if (FINGERPRINT == "@FINGERPRINT@") {
             LogHelper.info(Messages.NO_FINGERPRINT_MESSAGE)
         } else {
             LogHelper.warn(Messages.INVALID_FINGERPRINT_MESSAGE)
         }
     }
 
-    @EventHandler
+    @Mod.EventHandler
+    fun onServerStarting(event: FMLServerStartingEvent) {
+        proxy!!.onServerStarting(event)
+    }
+
+    @Mod.EventHandler
+    fun preInit(event: FMLPreInitializationEvent) {
+        proxy!!.onPreInit(event)
+    }
+
+    @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy)
-        proxy!!.registerKeyBindings()
+        proxy!!.onInit(event)
+    }
+
+    @Mod.EventHandler
+    fun postInit(event: FMLPostInitializationEvent) {
+        proxy!!.onPostInit(event)
+    }
+
+    @Mod.EventHandler
+    fun onServerStopping(event: FMLServerStoppingEvent) {
+        proxy!!.onServerStopping(event)
     }
 
     companion object {
-        @SidedProxy(clientSide = "com.eztouch.typingtools.client.ClientProxy", serverSide = "com.eztouch.typingtools.common.CommonProxy")
-        var proxy: CommonProxy? = null
+        @Mod.Instance(Reference.MOD_ID)
+        var instance: TypingTools? = null
+
+        @SidedProxy(clientSide = "com.eztouch.typingtools.proxy.ClientProxy", serverSide = "com.eztouch.typingtools.proxy.ServerProxy")
+        var proxy: IProxy? = null
+
         const val FINGERPRINT = "@FINGERPRINT@"
     }
 }

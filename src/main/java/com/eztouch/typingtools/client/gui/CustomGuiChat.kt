@@ -4,11 +4,14 @@ import net.minecraft.client.gui.GuiChat
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.gui.GuiTextField
 import net.minecraft.util.TabCompleter
+import net.minecraftforge.fml.relauncher.Side
+import net.minecraftforge.fml.relauncher.SideOnly
 import org.apache.commons.lang3.StringUtils
 import org.lwjgl.input.Keyboard
 import java.io.IOException
 import java.util.*
 
+@SideOnly(Side.CLIENT)
 class CustomGuiChat : GuiChat //GuiScreen
 () {
     private var tabCompleter: TabCompleter? = null
@@ -57,7 +60,7 @@ class CustomGuiChat : GuiChat //GuiScreen
         } else {
             var s = this.inputField.text.trim { it <= ' ' }
 
-            if (s.length > 0) {
+            if (s.isNotEmpty()) {
 
                 if (characterMap.isEmpty()) {
                     populateMap()
