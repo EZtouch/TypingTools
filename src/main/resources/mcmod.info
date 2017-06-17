@@ -1,15 +1,16 @@
 [
 {
-  "modid": "Fonter",
-  "name": "Fonter",
-  "description": "Makes the font fancy",
-  "version": "${version}",
+  "modid": "typingtools",
+  "name": "Typing Tools",
+  "description": "Enhance your typing experience.",
+  "version": "0.1",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
   "authorList": ["EZtouch"],
-  "logoFile": "",
+  "logoFile": "/achievement.jpg",
   "screenshots": [],
+  "requiredMods": ["Forge"],
   "dependencies": []
 }
 ]
