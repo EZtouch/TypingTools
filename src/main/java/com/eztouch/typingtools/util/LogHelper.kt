@@ -1,4 +1,4 @@
-package com.eztouch.typingtools.utility
+package com.eztouch.typingtools.util
 
 import org.apache.logging.log4j.Level
 
